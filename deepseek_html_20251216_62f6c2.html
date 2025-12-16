@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲爱的休闲小站 ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #fff5f7;
+            color: #555;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* 装饰性元素 */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff9eb5;
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffccd5 100%);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.2);
+            border-color: #ffb6c1;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: #ff9eb5;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .card h2 {
+            font-size: 1.8rem;
+            color: #ff6b8b;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .btn {
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+            padding: 12px 20px;
+            background: linear-gradient(to right, #ff9eb5, #ffb6c1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #ff7b9c, #ff9eb5);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+        }
+        
+        /* 模块内容 */
+        .module-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ffccd5;
+        }
+        
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 个性化设置 */
+        #colorPicker {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 便签样式 */
+        .notes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .note {
+            width: 150px;
+            height: 150px;
+            padding: 15px;
+            background-color: #fffacd;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+        
+        .note:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .note textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            resize: none;
+            font-size: 14px;
+            outline: none;
+            color: #555;
+        }
+        
+        .add-note {
+            background-color: #ffccd5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #ff6b8b;
+            cursor: pointer;
+        }
+        
+        /* 游戏区域 */
+        #gameArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        #emojiGrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .emoji-card {
+            width: 70px;
+            height: 70px;
+            background-color: #ffe6ee;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        
+        .emoji-card.flipped {
+            background-color: #ffb6c1;
+            transform: rotateY(180deg);
+        }
+        
+        /* 音乐播放器 */
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .player-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff9eb5;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .player-btn:hover {
+            background-color: #ff7b9c;
+            transform: scale(1.1);
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .love-message {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            color: #ff2e63;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .emoji-card {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        /* 隐藏模块的初始状态 */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰性爱心 -->
+    <div id="heartsContainer"></div>
+    
+    <div class="container">
+        <header>
+<!--            <h1>❤️ 亲爱的休闲小站 ❤️</h1>-->
+            <h1> H&Z </h1>
+ <!--           <p>专门为你打造的可爱空间，希望你喜欢~</p>-->
+        </header>
+        
+        <div class="main-content">
+            <!-- 个性化主题 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h2>个性化主题</h2>
+                <p>选择你喜欢的颜色主题</p>
+                <button class="btn" id="themeBtn">选择颜色</button>
+                
+                <div class="module-content" id="themeContent">
+                    <div id="colorPicker">
+                        <div class="color-option" style="background-color: #ffb6c1;" data-color="#ffb6c1"></div>
+                        <div class="color-option" style="background-color: #a6e3e9;" data-color="#a6e3e9"></div>
+                        <div class="color-option" style="background-color: #c7ceea;" data-color="#c7ceea"></div>
+                        <div class="color-option" style="background-color: #ffd6a5;" data-color="#ffd6a5"></div>
+                        <div class="color-option" style="background-color: #caffbf;" data-color="#caffbf"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 可爱便签 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-sticky-note"></i>
+                </div>
+                <h2>可爱便签</h2>
+                <p>记录你的想法和待办事项</p>
+                <button class="btn" id="notesBtn">打开便签</button>
+                
+                <div class="module-content" id="notesContent">
+                    <div class="notes-container">
+                        <div class="note add-note" id="addNoteBtn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 记忆翻牌游戏 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h2>记忆翻牌游戏</h2>
+                <p>挑战你的记忆力，找到所有相同的表情</p>
+                <button class="btn" id="gameBtn">开始游戏</button>
+                
+                <div class="module-content" id="gameContent">
+                    <div id="gameArea">
+                        <p id="gameStatus">点击开始游戏按钮开始</p>
+                        <div id="emojiGrid"></div>
+                        <button class="btn" id="restartGameBtn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 音乐播放器 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h2>放松音乐</h2>
+                <p>播放一些轻松的音乐放松心情</p>
+                <button class="btn" id="musicBtn">打开播放器</button>
+                
+                <div class="module-content" id="musicContent">
+                    <div id="player">
+                        <h3 style="text-align: center; color: #ff6b8b; margin-bottom: 15px;">放松心情的旋律</h3>
+                        <div class="player-controls">
+                            <button class="player-btn" id="prevBtn"><i class="fas fa-backward"></i></button>
+                            <button class="player-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                            <button class="player-btn" id="nextBtn"><i class="fas fa-forward"></i></button>
+                        </div>
+                        <p id="songTitle" style="text-align: center; margin-top: 15px; font-weight: bold;">纯音乐 - 宁静时光</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 每日一句 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2>每日一句</h2>
+                <p>看看今天有什么暖心的话</p>
+                <button class="btn" id="quoteBtn">显示今日句子</button>
+                
+                <div class="module-content" id="quoteContent">
+                    <div id="quoteDisplay" style="text-align: center; padding: 20px; font-size: 1.2rem; color: #ff6b8b;">
+                        <p>点击按钮查看今天的暖心句子</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 涂鸦板 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h2>创意涂鸦</h2>
+                <p>在这里随意画画，发挥你的创意</p>
+                <button class="btn" id="drawBtn">开始涂鸦</button>
+                
+                <div class="module-content" id="drawContent">
+                    <div style="text-align: center;">
+                        <canvas id="drawingCanvas" width="300" height="200" style="border: 2px dashed #ffb6c1; border-radius: 10px; background-color: white; cursor: crosshair;"></canvas>
+                        <div style="margin-top: 15px;">
+                            <button class="btn" id="clearCanvasBtn" style="width: auto; padding: 8px 15px; font-size: 0.9rem;">清除画板</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+<!--        <footer>
+            <p>这个网站充满了对你的爱和心意 ❤️</p>
+            <p>希望你喜欢这里的每一个小功能</p>
+            <div class="love-message" id="loveMessage">亲爱的，你是我生命中最美好的存在！</div>
+        </footer>-->
+    </div>
+    
+    <script>
+        // 创建装饰性爱心
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartCount = 25;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                heart.style.animationDuration = (Math.random() * 8 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        
+        // 模块切换功能
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const moduleId = this.id.replace('Btn', 'Content');
+                const module = document.getElementById(moduleId);
+                
+                // 如果模块已经显示，则隐藏它
+                if (module.classList.contains('active')) {
+                    module.classList.remove('active');
+                    this.textContent = this.textContent.replace('关闭', '打开');
+                } else {
+                    // 隐藏所有模块
+                    document.querySelectorAll('.module-content').forEach(m => {
+                        m.classList.remove('active');
+                    });
+                    
+                    // 重置所有按钮文本
+                    document.querySelectorAll('.btn').forEach(btn => {
+                        const btnModuleId = btn.id.replace('Btn', 'Content');
+                        if (btn.id !== this.id && document.getElementById(btnModuleId)) {
+                            btn.textContent = btn.textContent.replace('关闭', '打开');
+                        }
+                    });
+                    
+                    // 显示当前模块
+                    module.classList.add('active');
+                    this.textContent = this.textContent.replace('打开', '关闭');
+                }
+                
+                // 如果是游戏模块，初始化游戏
+                if (moduleId === 'gameContent' && !window.gameInitialized) {
+                    initMemoryGame();
+                    window.gameInitialized = true;
+                }
+                
+                // 如果是涂鸦模块，初始化画板
+                if (moduleId === 'drawContent' && !window.canvasInitialized) {
+                    initDrawingCanvas();
+                    window.canvasInitialized = true;
+                }
+            });
+        });
+        
+        // 个性化主题功能
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                document.documentElement.style.setProperty('--primary-color', color);
+                
+                // 更新所有相关元素的颜色
+                document.querySelectorAll('header, footer').forEach(el => {
+                    el.style.background = `linear-gradient(135deg, ${color} 0%, ${lightenColor(color, 20)} 100%)`;
+                });
+                
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.style.background = `linear-gradient(to right, ${color}, ${lightenColor(color, 10)})`;
+                });
+                
+                // 显示选择反馈
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
+        });
+        
+        // 颜色辅助函数
+        function lightenColor(color, percent) {
+            const num = parseInt(color.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            
+            return '#' + (
+                0x1000000 + 
+                (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + 
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + 
+                (B < 255 ? B < 1 ? 0 : B : 255)
+            ).toString(16).slice(1);
+        }
+        
+        // 便签功能
+        document.getElementById('addNoteBtn').addEventListener('click', function() {
+            const notesContainer = document.querySelector('.notes-container');
+            const noteCount = document.querySelectorAll('.note').length;
+            
+            if (noteCount >= 6) {
+                alert('最多只能创建6个便签哦！');
+                return;
+            }
+            
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+            
+            const textarea = document.createElement('textarea');
+            textarea.placeholder = '写下你的想法...';
+            
+            // 保存便签内容
+            textarea.addEventListener('input', function() {
+                saveNotes();
+            });
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '×';
+            deleteBtn.style.position = 'absolute';
+            deleteBtn.style.top = '5px';
+            deleteBtn.style.right = '5px';
+            deleteBtn.style.background = '#ff6b8b';
+            deleteBtn.style.color = 'white';
+            deleteBtn.style.border = 'none';
+            deleteBtn.style.borderRadius = '50%';
+            deleteBtn.style.width = '20px';
+            deleteBtn.style.height = '20px';
+            deleteBtn.style.fontSize = '14px';
+            deleteBtn.style.cursor = 'pointer';
+            deleteBtn.style.display = 'none';
+            
+            note.addEventListener('mouseenter', function() {
+                deleteBtn.style.display = 'block';
+            });
+            
+            note.addEventListener('mouseleave', function() {
+                deleteBtn.style.display = 'none';
+            });
+            
+            deleteBtn.addEventListener('click', function() {
+                note.remove();
+                saveNotes();
+            });
+            
+            note.appendChild(textarea);
+            note.appendChild(deleteBtn);
+            
+            // 在添加按钮前插入新便签
+            notesContainer.insertBefore(note, this);
+            
+            // 聚焦到新便签
+            textarea.focus();
+            
+            saveNotes();
+        });
+        
+        // 保存便签到本地存储
+        function saveNotes() {
+            const notes = [];
+            document.querySelectorAll('.note textarea').forEach((textarea, index) => {
+                if (textarea.parentElement.id !== 'addNoteBtn') {
+                    notes.push(textarea.value);
+                }
+            });
+            localStorage.setItem('cuteNotes', JSON.stringify(notes));
+        }
+        
+        // 加载便签
+        function loadNotes() {
+            const savedNotes = JSON.parse(localStorage.getItem('cuteNotes') || '[]');
+            const notesContainer = document.querySelector('.notes-container');
+            const addNoteBtn = document.getElementById('addNoteBtn');
+            
+            savedNotes.forEach(noteText => {
+                const note = document.createElement('div');
+                note.className = 'note';
+                note.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+                
+                const textarea = document.createElement('textarea');
+                textarea.value = noteText;
+                
+                textarea.addEventListener('input', function() {
+                    saveNotes();
+                });
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '×';
+                deleteBtn.style.position = 'absolute';
+                deleteBtn.style.top = '5px';
+                deleteBtn.style.right = '5px';
+                deleteBtn.style.background = '#ff6b8b';
+                deleteBtn.style.color = 'white';
+                deleteBtn.style.border = 'none';
+                deleteBtn.style.borderRadius = '50%';
+                deleteBtn.style.width = '20px';
+                deleteBtn.style.height = '20px';
+                deleteBtn.style.fontSize = '14px';
+                deleteBtn.style.cursor = 'pointer';
+                deleteBtn.style.display = 'none';
+                
+                note.addEventListener('mouseenter', function() {
+                    deleteBtn.style.display = 'block';
+                });
+                
+                note.addEventListener('mouseleave', function() {
+                    deleteBtn.style.display = 'none';
+                });
+                
+                deleteBtn.addEventListener('click', function() {
+                    note.remove();
+                    saveNotes();
+                });
+                
+                note.appendChild(textarea);
+                note.appendChild(deleteBtn);
+                
+                notesContainer.insertBefore(note, addNoteBtn);
+            });
+        }
+        
+        // 记忆翻牌游戏
+        function initMemoryGame() {
+            const emojis = ['🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯'];
+            const gameGrid = document.getElementById('emojiGrid');
+            const gameStatus = document.getElementById('gameStatus');
+            
+            let flippedCards = [];
+            let matchedPairs = 0;
+            let gameStarted = false;
+            
+            // 洗牌算法
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            function createGameBoard() {
+                gameGrid.innerHTML = '';
+                const shuffledEmojis = shuffleArray([...emojis]);
+                
+                shuffledEmojis.forEach(emoji => {
+                    const card = document.createElement('div');
+                    card.className = 'emoji-card';
+                    card.dataset.emoji = emoji;
+                    card.innerHTML = '?';
+                    
+                    card.addEventListener('click', () => flipCard(card));
+                    gameGrid.appendChild(card);
+                });
+                
+                gameStatus.textContent = "点击卡片开始游戏！找到所有匹配的对子。";
+                flippedCards = [];
+                matchedPairs = 0;
+                gameStarted = true;
+            }
+            
+            function flipCard(card) {
+                if (!gameStarted) return;
+                
+                // 如果卡片已经翻转或匹配，则忽略点击
+                if (card.classList.contains('flipped') || flippedCards.length >= 2) {
+                    return;
+                }
+                
+                // 翻转卡片
+                card.classList.add('flipped');
+                card.innerHTML = card.dataset.emoji;
+                flippedCards.push(card);
+                
+                // 如果翻转了两张卡片，检查是否匹配
+                if (flippedCards.length === 2) {
+                    const [card1, card2] = flippedCards;
+                    
+                    if (card1.dataset.emoji === card2.dataset.emoji) {
+                        // 匹配成功
+                        matchedPairs++;
+                        flippedCards = [];
+                        
+                        // 检查游戏是否结束
+                        if (matchedPairs === emojis.length / 2) {
+                            setTimeout(() => {
+                                gameStatus.textContent = "恭喜！你找到了所有匹配的对子！🎉";
+                                gameStarted = false;
+                            }, 500);
+                        } else {
+                            gameStatus.textContent = `匹配成功！已找到 ${matchedPairs} 对。继续加油！`;
+                        }
+                    } else {
+                        // 不匹配，翻转回去
+                        gameStatus.textContent = "不匹配，再试试看！";
+                        setTimeout(() => {
+                            card1.classList.remove('flipped');
+                            card2.classList.remove('flipped');
+                            card1.innerHTML = '?';
+                            card2.innerHTML = '?';
+                            flippedCards = [];
+                        }, 1000);
+                    }
+                }
+            }
+            
+            // 初始化游戏板
+            createGameBoard();
+            
+            // 重新开始按钮
+            document.getElementById('restartGameBtn').addEventListener('click', createGameBoard);
+        }
+        
+        // 音乐播放器功能
+        const songs = [
+            { title: "纯音乐 - 宁静时光", src: "https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" },
+            { title: "钢琴曲 - 温馨回忆", src: "https://assets.mixkit.co/music/preview/mixkit-memories-128.mp3" },
+            { title: "轻音乐 - 午后阳光", src: "https://assets.mixkit.co/music/preview/mixkit-sunny-day-16.mp3" },
+            { title: "吉他曲 - 甜蜜时光", src: "https://assets.mixkit.co/music/preview/mixkit-sweet-kindness-479.mp3" }
+        ];
+        
+        let currentSongIndex = 0;
+        let audio = new Audio(songs[currentSongIndex].src);
+        let isPlaying = false;
+        
+        document.getElementById('playBtn').addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                this.innerHTML = '<i class="fas fa-play"></i>';
+                isPlaying = false;
+            } else {
+                audio.play();
+                this.innerHTML = '<i class="fas fa-pause"></i>';
+                isPlaying = true;
+            }
+        });
+        
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            changeSong();
+        });
+        
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            changeSong();
+        });
+        
+        function changeSong() {
+            audio.pause();
+            audio = new Audio(songs[currentSongIndex].src);
+            document.getElementById('songTitle').textContent = songs[currentSongIndex].title;
+            
+            if (isPlaying) {
+                audio.play();
+            }
+        }
+        
+        // 每日一句功能
+        const quotes = [
+            "你是世界上最可爱的人，我每天都感谢命运让我遇见你。",
+            "你的微笑是我一天中最期待看到的画面。",
+            "和你在一起的每一刻，都是我生命中最美好的时光。",
+            "你的存在让我的世界变得完整而美好。",
+            "无论发生什么，我都会一直爱你、支持你。",
+            "你的善良和温柔让我每天都感到幸福。",
+            "感谢你出现在我的生命里，让我的世界充满阳光。",
+            "你是我心中最特别的人，无人可以替代。",
+            "和你在一起的每一天都像是情人节。",
+            "你的快乐就是我最大的幸福。"
+        ];
+        
+        document.getElementById('quoteBtn').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerHTML = `<p>"${quotes[randomIndex]}"</p>`;
+        });
+        
+        // 涂鸦板功能
+        function initDrawingCanvas() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const clearBtn = document.getElementById('clearCanvasBtn');
+            
+            // 设置初始画笔属性
+            ctx.strokeStyle = '#ff6b8b';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            
+            let drawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            // 调整画布大小
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const maxWidth = Math.min(container.clientWidth - 40, 500);
+                
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * 0.66;
+                
+                // 重绘画布内容
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                ctx.putImageData(imageData, 0, 0);
+            }
+            
+            // 开始绘画
+            function startDrawing(e) {
+                drawing = true;
+                [lastX, lastY] = getMousePos(canvas, e);
+            }
+            
+            // 绘画过程
+            function draw(e) {
+                if (!drawing) return;
+                
+                e.preventDefault();
+                
+                const [x, y] = getMousePos(canvas, e);
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                
+                [lastX, lastY] = [x, y];
+            }
+            
+            // 停止绘画
+            function stopDrawing() {
+                drawing = false;
+            }
+            
+            // 获取鼠标位置
+            function getMousePos(canvas, evt) {
+                const rect = canvas.getBoundingClientRect();
+                let clientX, clientY;
+                
+                if (evt.type.includes('touch')) {
+                    clientX = evt.touches[0].clientX;
+                    clientY = evt.touches[0].clientY;
+                } else {
+                    clientX = evt.clientX;
+                    clientY = evt.clientY;
+                }
+                
+                return [
+                    clientX - rect.left,
+                    clientY - rect.top
+                ];
+            }
+            
+            // 清除画布
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // 事件监听器
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // 触摸事件支持
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startDrawing(e);
+            });
+            
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                draw(e);
+            });
+            
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            clearBtn.addEventListener('click', clearCanvas);
+            
+            // 初始调整画布大小
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+        }
+        
+        // 爱心消息轮换
+        const loveMessages = [
+            "亲爱的，你是我生命中最美好的存在！",
+            "每天想到你，我的心里都充满了温暖。",
+            "和你在一起的每一秒都是我珍藏的宝藏。",
+            "你的笑容是我每天最大的动力。",
+            "爱你是我做过最正确的决定。"
+        ];
+        
+        function rotateLoveMessage() {
+            const messageElement = document.getElementById('loveMessage');
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % loveMessages.length;
+                messageElement.textContent = loveMessages[currentIndex];
+            }, 5000);
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            loadNotes();
+            rotateLoveMessage();
+            
+            // 随机显示一个每日一句
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerHTML = `<p>"${quotes[randomIndex]}"</p>`;
+        });
+    </script>
+</body>
+</html>
