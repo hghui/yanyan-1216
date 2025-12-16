@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲爱的休闲小站 ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        /* CSS变量定义 - 主题色系统 */
+        :root {
+            --primary-color: #ffb6c1;
+            --primary-light: #ffccd5;
+            --primary-dark: #ff7b9c;
+            --accent-color: #ff6b8b;
+            --secondary-color: #ff9eb5;
+            --text-color: #555;
+            --card-bg: white;
+            --header-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            --btn-gradient: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            --wave-gradient: linear-gradient(to top, var(--secondary-color), var(--accent-color));
+            --note-bg: #fffacd;
+        }
+        
+        body {
+            background-color: #fff5f7;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* 装饰性元素 */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: var(--secondary-color);
+            z-index: -1;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--header-gradient);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            color: white;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        
+        .card h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .btn {
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+            padding: 12px 20px;
+            background: var(--btn-gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary-color));
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+        }
+        
+        /* 模块内容 */
+        .module-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--primary-light);
+        }
+        
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 个性化设置 */
+        #colorPicker {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s, border 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border: 3px solid #333;
+            transform: scale(1.1);
+        }
+        
+        /* 主题预览 */
+        .theme-preview {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .theme-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        /* 便签样式 */
+        .notes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .note {
+            width: 150px;
+            height: 150px;
+            padding: 15px;
+            background-color: var(--note-bg);
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+        
+        .note:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        .note textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            resize: none;
+            font-size: 14px;
+            outline: none;
+            color: #555;
+        }
+        
+        .add-note {
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+        
+        /* 音乐播放器样式 */
+        #player {
+            position: relative;
+        }
+        
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .player-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .player-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        /* 播放按钮跳动动画 */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .player-btn.playing {
+            animation: beat 0.5s ease infinite;
+            background-color: var(--primary-dark);
+        }
+        
+        /* 音频波形动画 */
+        .wave-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 60px;
+            margin: 20px 0;
+            gap: 8px;
+        }
+        
+        .wave-bar {
+            width: 10px;
+            background: var(--wave-gradient);
+            border-radius: 5px 5px 0 0;
+            animation: wave 1.5s ease-in-out infinite;
+        }
+        
+        /* 不同高度的波形条 */
+        .wave-bar:nth-child(1) { height: 20px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(2) { height: 40px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { height: 60px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { height: 40px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(5) { height: 20px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(6) { height: 40px; animation-delay: 0.6s; }
+        .wave-bar:nth-child(7) { height: 60px; animation-delay: 0.7s; }
+        .wave-bar:nth-child(8) { height: 40px; animation-delay: 0.8s; }
+        
+        @keyframes wave {
+            0%, 100% { height: 20px; }
+            50% { height: 60px; }
+        }
+        
+        /* 音符浮动动画 */
+        .floating-note {
+            position: absolute;
+            font-size: 24px;
+            color: var(--secondary-color);
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        @keyframes float-note {
+            0% { 
+                transform: translateY(0) rotate(0deg); 
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateY(-100px) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+        
+        /* 歌曲信息样式 */
+        .song-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .current-song-info {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            padding: 10px;
+            background-color: rgba(255, 182, 193, 0.1);
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .song-label {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+        
+        .song-title {
+            font-weight: normal;
+        }
+        
+        /* 歌词显示区域 */
+        .lyrics-container {
+            height: 200px;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(255, 182, 193, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--primary-light);
+        }
+        
+        .lyrics-line {
+            text-align: center;
+            margin: 8px 0;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.3s;
+            min-height: 24px;
+        }
+        
+        .lyrics-line.active {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transform: scale(1.05);
+        }
+        
+        .lyrics-line.empty {
+            color: #999;
+            font-style: italic;
+        }
+        
+        /* 记忆翻牌游戏样式 */
+        #emojiGrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .emoji-card {
+            width: 70px;
+            height: 70px;
+            background-color: #ffe6ee;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        
+        .emoji-card.flipped {
+            background-color: var(--primary-color);
+            transform: rotateY(180deg);
+        }
+        
+        /* 猜牌游戏样式 */
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .difficulty-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--primary-color);
+            background-color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .difficulty-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(255, 107, 139, 0.2);
+        }
+        
+        /* 随机选牌动画区域 */
+        .random-card-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 180px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .card-slot {
+            width: 100px;
+            height: 140px;
+            background-color: white;
+            border: 3px solid var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 随机选牌动画效果 */
+        @keyframes cardShuffle {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            50% { transform: scale(1) rotate(0deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .card-shuffling {
+            animation: cardShuffle 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes cardReveal {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .card-revealed {
+            animation: cardReveal 0.8s ease-out forwards;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+            max-width: 400px;
+        }
+        
+        .card-btn {
+            width: 70px;
+            height: 90px;
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-btn:hover {
+            background-color: #ffe6ee;
+            transform: translateY(-5px);
+        }
+        
+        .card-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f0f0f0;
+        }
+        
+        .card-btn.selected {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .game-status {
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 15px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .attempts {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .attempt-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+        }
+        
+        .attempt-dot.used {
+            background-color: var(--accent-color);
+        }
+        
+        .game-result {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .win {
+            background-color: rgba(202, 255, 191, 0.3);
+            color: #4CAF50;
+        }
+        
+        .lose {
+            background-color: rgba(255, 182, 193, 0.3);
+            color: var(--accent-color);
+        }
+        
+        .revealed-card {
+            width: 100px;
+            height: 140px;
+            margin: 20px auto;
+            background-color: white;
+            border: 3px solid var(--accent-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+            border-radius: 20px;
+            color: white;
+            transition: background 0.3s;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .love-message {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            color: #ff2e63;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .emoji-card {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            
+            .card-btn {
+                width: 60px;
+                height: 80px;
+                font-size: 1.3rem;
+            }
+            
+            .lyrics-container {
+                height: 150px;
+            }
+        }
+        
+        /* 隐藏模块的初始状态 */
+        .hidden {
+            display: none;
+        }
+        
+        /* 歌词错误提示 */
+        .lyrics-error {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰性爱心 -->
+    <div id="heartsContainer"></div>
+    
+    <div class="container">
+        <header>
+            <h1> H&Z </h1>
+        </header>
+        
+        <div class="main-content">
+            <!-- 个性化主题 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h2>个性化主题</h2>
+                <p>选择你喜欢的颜色主题</p>
+                <button class="btn" id="themeBtn">选择颜色</button>
+                
+                <div class="module-content" id="themeContent">
+                    <div id="colorPicker">
+                        <div class="color-option" style="background-color: #ffb6c1;" data-color="#ffb6c1" data-light="#ffccd5" data-dark="#ff7b9c" data-accent="#ff6b8b" data-secondary="#ff9eb5"></div>
+                        <div class="color-option" style="background-color: #a6e3e9;" data-color="#a6e3e9" data-light="#cbf1f5" data-dark="#71c9ce" data-accent="#00adb5" data-secondary="#71c9ce"></div>
+                        <div class="color-option" style="background-color: #c7ceea;" data-color="#c7ceea" data-light="#dae3f2" data-dark="#819aff" data-accent="#5c6bc0" data-secondary="#819aff"></div>
+                        <div class="color-option" style="background-color: #ffd6a5;" data-color="#ffd6a5" data-light="#ffeda3" data-dark="#ffb26b" data-accent="#ff9a3c" data-secondary="#ffb26b"></div>
+                        <div class="color-option" style="background-color: #caffbf;" data-color="#caffbf" data-light="#fdffb6" data-dark="#9bf6ff" data-accent="#a0c4ff" data-secondary="#9bf6ff"></div>
+                    </div>
+                    <div class="theme-preview">
+                        <span>当前主题:</span>
+                        <div class="theme-dot" id="currentThemeDot" style="background-color: #ffb6c1;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 可爱便签 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-sticky-note"></i>
+                </div>
+                <h2>可爱便签</h2>
+                <p>记录你的想法和待办事项</p>
+                <button class="btn" id="notesBtn">打开便签</button>
+                
+                <div class="module-content" id="notesContent">
+                    <div class="notes-container">
+                        <div class="note add-note" id="addNoteBtn">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 记忆翻牌游戏 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h2>记忆翻牌游戏</h2>
+                <p>挑战你的记忆力，找到所有相同的表情</p>
+                <button class="btn" id="gameBtn">开始游戏</button>
+                
+                <div class="module-content" id="gameContent">
+                    <div id="gameArea">
+                        <p id="gameStatus">点击卡片开始游戏！找到所有匹配的对子。</p>
+                        <div id="emojiGrid"></div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button class="btn" id="restartGameBtn" style="width: auto; padding: 10px 25px;">重新开始</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 猜牌游戏（独立模块） -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-dice"></i>
+                </div>
+                <h2>猜牌游戏</h2>
+                <p>猜猜我随机抽到了哪张牌？你有3次机会！</p>
+                <button class="btn" id="guessCardBtn">打开游戏</button>
+                
+                <div class="module-content" id="guessCardContent">
+                    <div id="guessCardGame">
+                        <!-- 难度选择 -->
+                        <div class="difficulty-selector">
+                            <div class="difficulty-btn active" data-difficulty="easy">⭐️ 简单模式</div>
+                            <div class="difficulty-btn" data-difficulty="hard">⭐️⭐️ 困难模式</div>
+                        </div>
+                        
+                        <!-- 随机选牌动画区域 -->
+                        <div class="random-card-animation">
+                            <div class="card-slot" id="cardSlot">
+                                ?
+                            </div>
+                        </div>
+                        
+                        <!-- 游戏状态 -->
+                        <div class="game-status" id="gameStatusText">
+                            请先选择难度，然后开始游戏！
+                        </div>
+                        
+                        <!-- 尝试次数 -->
+                        <div class="attempts" id="attemptsContainer">
+                            <div class="attempt-dot"></div>
+                            <div class="attempt-dot"></div>
+                            <div class="attempt-dot"></div>
+                        </div>
+                        
+                        <!-- 扑克牌选择 -->
+                        <div class="cards-grid" id="cardsGrid">
+                            <!-- 卡片将通过JS动态生成 -->
+                        </div>
+                        
+                        <!-- 游戏结果 -->
+                        <div id="gameResult" class="hidden"></div>
+                        
+                        <!-- 操作按钮 -->
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button class="btn" id="startGuessGameBtn" style="width: auto; padding: 10px 25px;">开始新游戏</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 音乐播放器 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h2>放松音乐</h2>
+                <p>播放一些轻松的音乐放松心情</p>
+                <button class="btn" id="musicBtn">打开播放器</button>
+                
+                <div class="module-content" id="musicContent">
+                    <div id="player">
+                        <h3 style="text-align: center; color: var(--accent-color); margin-bottom: 15px;">放松心情的旋律</h3>
+                        
+                        <!-- 歌曲信息显示 -->
+                        <div class="song-info-container">
+                            <div class="current-song-info" id="currentSongInfo">
+                                <div class="song-label">正在播放</div>
+                                <div class="song-title" id="currentSongTitle">纯音乐 - 旅雁孤云</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 音频波形动画 -->
+                        <div class="wave-container" id="waveContainer" style="display: none;">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <!-- 歌词显示区域 -->
+                        <div class="lyrics-container" id="lyricsContainer" style="display: none;">
+                            <div class="lyrics-line empty">歌词加载中...</div>
+                        </div>
+                        
+                        <div class="player-controls">
+                            <button class="player-btn" id="prevBtn"><i class="fas fa-backward"></i></button>
+                            <button class="player-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                            <button class="player-btn" id="nextBtn"><i class="fas fa-forward"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 每日一句 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2>每日一句</h2>
+                <p>看看今天有什么暖心的话</p>
+                <button class="btn" id="quoteBtn">显示今日句子</button>
+                
+                <div class="module-content" id="quoteContent">
+                    <div id="quoteDisplay" style="text-align: center; padding: 20px; font-size: 1.2rem; color: var(--accent-color);">
+                        <p>点击按钮查看今天的暖心句子</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 涂鸦板 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h2>创意涂鸦</h2>
+                <p>在这里随意画画，发挥你的创意</p>
+                <button class="btn" id="drawBtn">开始涂鸦</button>
+                
+                <div class="module-content" id="drawContent">
+                    <div style="text-align: center;">
+                        <canvas id="drawingCanvas" width="300" height="200" style="border: 2px dashed var(--primary-color); border-radius: 10px; background-color: white; cursor: crosshair;"></canvas>
+                        <div style="margin-top: 15px;">
+                            <button class="btn" id="clearCanvasBtn" style="width: auto; padding: 8px 15px; font-size: 0.9rem;">清除画板</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Made with ❤️ for H&Z</p>
+            <p class="love-message">每一天都因你而美好！</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 创建装饰性爱心
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartCount = 25;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                heart.style.animationDuration = (Math.random() * 8 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        
+        // ==================== 主题系统 ====================
+        // 主题配置
+        const themeConfigs = {
+            'pink': {
+                primary: '#ffb6c1',
+                light: '#ffccd5',
+                dark: '#ff7b9c',
+                accent: '#ff6b8b',
+                secondary: '#ff9eb5',
+                name: '粉色主题'
+            },
+            'blue': {
+                primary: '#a6e3e9',
+                light: '#cbf1f5',
+                dark: '#71c9ce',
+                accent: '#00adb5',
+                secondary: '#71c9ce',
+                name: '蓝色主题'
+            },
+            'purple': {
+                primary: '#c7ceea',
+                light: '#dae3f2',
+                dark: '#819aff',
+                accent: '#5c6bc0',
+                secondary: '#819aff',
+                name: '紫色主题'
+            },
+            'orange': {
+                primary: '#ffd6a5',
+                light: '#ffeda3',
+                dark: '#ffb26b',
+                accent: '#ff9a3c',
+                secondary: '#ffb26b',
+                name: '橙色主题'
+            },
+            'green': {
+                primary: '#caffbf',
+                light: '#fdffb6',
+                dark: '#9bf6ff',
+                accent: '#a0c4ff',
+                secondary: '#9bf6ff',
+                name: '绿色主题'
+            }
+        };
+        
+        // 保存主题到本地存储
+        function saveTheme(themeName) {
+            localStorage.setItem('selectedTheme', themeName);
+        }
+        
+        // 加载保存的主题
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'pink';
+            applyTheme(savedTheme);
+            
+            // 更新颜色选择器的选中状态
+            updateColorPickerSelection(savedTheme);
+        }
+        
+        // 应用主题
+        function applyTheme(themeName) {
+            const theme = themeConfigs[themeName] || themeConfigs.pink;
+            
+            // 更新CSS变量
+            document.documentElement.style.setProperty('--primary-color', theme.primary);
+            document.documentElement.style.setProperty('--primary-light', theme.light);
+            document.documentElement.style.setProperty('--primary-dark', theme.dark);
+            document.documentElement.style.setProperty('--accent-color', theme.accent);
+            document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+            
+            // 更新渐变
+            document.documentElement.style.setProperty('--header-gradient', `linear-gradient(135deg, ${theme.primary} 0%, ${theme.light} 100%)`);
+            document.documentElement.style.setProperty('--btn-gradient', `linear-gradient(to right, ${theme.secondary}, ${theme.primary})`);
+            document.documentElement.style.setProperty('--wave-gradient', `linear-gradient(to top, ${theme.secondary}, ${theme.accent})`);
+            
+            // 更新当前主题指示器
+            const themeDot = document.getElementById('currentThemeDot');
+            if (themeDot) {
+                themeDot.style.backgroundColor = theme.primary;
+                themeDot.title = theme.name;
+            }
+            
+            // 更新所有动态元素的颜色
+            updateDynamicElementsColor(theme);
+            
+            // 重新创建爱心以应用新颜色
+            recreateHearts(theme.secondary);
+        }
+        
+        // 更新动态元素的颜色
+        function updateDynamicElementsColor(theme) {
+            // 更新按钮渐变
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.style.background = `linear-gradient(to right, ${theme.secondary}, ${theme.primary})`;
+                btn.addEventListener('mouseenter', function() {
+                    this.style.background = `linear-gradient(to right, ${theme.dark}, ${theme.secondary})`;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.background = `linear-gradient(to right, ${theme.secondary}, ${theme.primary})`;
+                });
+            });
+            
+            // 更新播放器按钮
+            document.querySelectorAll('.player-btn').forEach(btn => {
+                btn.style.backgroundColor = theme.secondary;
+                btn.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = theme.dark;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('playing')) {
+                        this.style.backgroundColor = theme.secondary;
+                    }
+                });
+            });
+            
+            // 更新标题和图标颜色
+            document.querySelectorAll('.card h2').forEach(h2 => {
+                h2.style.color = theme.accent;
+            });
+            
+            document.querySelectorAll('.card-icon').forEach(icon => {
+                icon.style.color = theme.secondary;
+            });
+            
+            // 更新头部和页脚背景
+            document.querySelectorAll('header, footer').forEach(el => {
+                el.style.background = `linear-gradient(135deg, ${theme.primary} 0%, ${theme.light} 100%)`;
+            });
+        }
+        
+        // 重新创建爱心
+        function recreateHearts(color) {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = '';
+            
+            const heartCount = 25;
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.color = color;
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                heart.style.animationDuration = (Math.random() * 8 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        
+        // 更新颜色选择器选中状态
+        function updateColorPickerSelection(themeName) {
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('active');
+                const colorValue = option.getAttribute('data-color');
+                const theme = themeConfigs[themeName];
+                
+                if (theme && theme.primary === colorValue) {
+                    option.classList.add('active');
+                }
+            });
+        }
+        
+        // 初始化主题系统
+        function initThemeSystem() {
+            // 颜色选择器点击事件
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const colorValue = this.getAttribute('data-color');
+                    
+                    // 查找对应的主题名称
+                    let selectedTheme = 'pink';
+                    for (const [themeName, config] of Object.entries(themeConfigs)) {
+                        if (config.primary === colorValue) {
+                            selectedTheme = themeName;
+                            break;
+                        }
+                    }
+                    
+                    // 应用主题
+                    applyTheme(selectedTheme);
+                    saveTheme(selectedTheme);
+                    
+                    // 更新选中状态
+                    updateColorPickerSelection(selectedTheme);
+                    
+                    // 显示选择反馈
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+            
+            // 加载保存的主题
+            loadTheme();
+        }
+        
+        // ==================== 歌词系统 ====================
+        // 歌曲数据
+        const songs = [
+            { 
+                title: "旅雁孤云", 
+                src: "lygy.mp3",
+                lyric: null
+            },
+            { 
+                title: "助兴", 
+                src: "zx.mp3",
+                lyric: null
+            },
+            { 
+                title: "重生之我在异乡为异客", 
+                src: "cszwzyxwyk.mp3",
+                lyric: null
+            },
+            { 
+                title: "远山之外是远山", 
+                src: "yszwsys.mp3",
+                lyric: null
+            }
+        ];
+        
+        // 解析LRC歌词 - 改进版
+        function parseLRC(lrcText) {
+            if (!lrcText || lrcText.trim() === '') {
+                console.log('歌词内容为空');
+                return null;
+            }
+            
+            try {
+                const lines = lrcText.split('\n');
+                const lyrics = [];
+                
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
+                    
+                    // 匹配时间标签，支持 [mm:ss.xx] 或 [mm:ss]
+                    const timeRegex = /\[(\d{2}):(\d{2})(?:\.(\d{2,3}))?\]/g;
+                    const matches = [...line.matchAll(timeRegex)];
+                    
+                    if (matches.length > 0) {
+                        const text = line.replace(timeRegex, '').trim();
+                        
+                        if (text) {
+                            matches.forEach(match => {
+                                const minutes = parseInt(match[1]);
+                                const seconds = parseInt(match[2]);
+                                const milliseconds = match[3] ? parseInt(match[3].padEnd(3, '0')) / 1000 : 0;
+                                const time = minutes * 60 + seconds + milliseconds;
+                                
+                                lyrics.push({
+                                    time: time,
+                                    text: text
+                                });
+                            });
+                        }
+                    }
+                });
+                
+                // 按时间排序
+                lyrics.sort((a, b) => a.time - b.time);
+                
+                console.log(`解析到${lyrics.length}行歌词`);
+                return lyrics.length > 0 ? lyrics : null;
+            } catch (error) {
+                console.error('歌词解析错误:', error);
+                return null;
+            }
+        }
+        
+        // 显示歌词
+        function displayLyrics() {
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            
+            if (!window.lyricsData || window.lyricsData.length === 0) {
+                lyricsContainer.innerHTML = '<div class="lyrics-line empty">暂无歌词</div>';
+                return;
+            }
+            
+            // 清空现有歌词
+            lyricsContainer.innerHTML = '';
+            
+            // 创建歌词行
+            window.lyricsData.forEach((lyric, index) => {
+                const line = document.createElement('div');
+                line.className = 'lyrics-line';
+                line.textContent = lyric.text;
+                line.dataset.time = lyric.time;
+                line.dataset.index = index;
+                lyricsContainer.appendChild(line);
+            });
+            
+            // 开始歌词同步
+            if (window.lyricsInterval) {
+                clearInterval(window.lyricsInterval);
+            }
+            
+            window.lyricsInterval = setInterval(updateLyrics, 100);
+        }
+        
+        // 更新歌词高亮
+        function updateLyrics() {
+            if (!window.lyricsData || !window.isPlaying || !window.audio) return;
+            
+            const currentTime = window.audio.currentTime;
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            const lines = lyricsContainer.querySelectorAll('.lyrics-line');
+            
+            let activeIndex = -1;
+            
+            // 找到当前应该高亮的歌词行
+            for (let i = 0; i < window.lyricsData.length; i++) {
+                if (currentTime >= window.lyricsData[i].time) {
+                    // 检查下一句歌词的时间，如果还没到下一句，则当前句保持高亮
+                    if (i === window.lyricsData.length - 1 || currentTime < window.lyricsData[i + 1].time) {
+                        activeIndex = i;
+                        break;
+                    }
+                }
+            }
+            
+            // 更新所有行的状态
+            lines.forEach((line, index) => {
+                line.classList.remove('active');
+                if (index === activeIndex) {
+                    line.classList.add('active');
+                    
+                    // 平滑滚动到当前歌词
+                    const container = document.getElementById('lyricsContainer');
+                    const lineTop = line.offsetTop;
+                    const containerHeight = container.clientHeight;
+                    const scrollTo = lineTop - containerHeight / 2;
+                    
+                    container.scrollTo({
+                        top: scrollTo,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+        
+        // 更新歌曲信息
+        function updateSongInfo() {
+            if (!window.songs || window.currentSongIndex === undefined) return;
+            
+            const song = window.songs[window.currentSongIndex];
+            document.getElementById('currentSongTitle').textContent = song.title;
+            
+            // 解析歌词
+            window.lyricsData = parseLRC(song.lyric);
+            
+            // 显示或隐藏歌词容器
+            const lyricsContainer = document.getElementById('lyricsContainer');
+            if (window.lyricsData && window.lyricsData.length > 0) {
+                lyricsContainer.style.display = 'block';
+                displayLyrics();
+            } else {
+                lyricsContainer.style.display = 'block';
+                lyricsContainer.innerHTML = '<div class="lyrics-line empty">暂无歌词</div>';
+            }
+            
+            // 显示波形动画
+            const waveContainer = document.getElementById('waveContainer');
+            waveContainer.style.display = 'flex';
+        }
+        
+        // ==================== 模块切换功能 ====================
+        document.querySelectorAll('.btn').forEach(button => {
+            if (button.id && button.id.includes('Btn')) {
+                button.addEventListener('click', function() {
+                    const moduleId = this.id.replace('Btn', 'Content');
+                    const module = document.getElementById(moduleId);
+                    
+                    // 如果模块已经显示，则隐藏它
+                    if (module.classList.contains('active')) {
+                        module.classList.remove('active');
+                        this.textContent = this.textContent.replace('关闭', '打开');
+                        
+                        // 如果是音乐模块且正在播放，暂停音乐
+                        if (moduleId === 'musicContent' && window.isPlaying) {
+                            toggleMusic();
+                        }
+                    } else {
+                        // 隐藏所有模块
+                        document.querySelectorAll('.module-content').forEach(m => {
+                            m.classList.remove('active');
+                        });
+                        
+                        // 重置所有按钮文本
+                        document.querySelectorAll('.btn').forEach(btn => {
+                            const btnModuleId = btn.id.replace('Btn', 'Content');
+                            if (btn.id !== this.id && document.getElementById(btnModuleId)) {
+                                btn.textContent = btn.textContent.replace('关闭', '打开');
+                            }
+                        });
+                        
+                        // 显示当前模块
+                        module.classList.add('active');
+                        this.textContent = this.textContent.replace('打开', '关闭');
+                    }
+                    
+                    // 模块特定初始化
+                    switch(moduleId) {
+                        case 'gameContent':
+                            if (!window.gameInitialized) {
+                                initMemoryGame();
+                                window.gameInitialized = true;
+                            }
+                            break;
+                        case 'guessCardContent':
+                            if (!window.guessCardInitialized) {
+                                initGuessCardGame();
+                                window.guessCardInitialized = true;
+                            }
+                            break;
+                        case 'drawContent':
+                            if (!window.canvasInitialized) {
+                                initDrawingCanvas();
+                                window.canvasInitialized = true;
+                            }
+                            break;
+                        case 'musicContent':
+                            if (!window.musicInitialized) {
+                                window.musicInitialized = true;
+                            }
+                            break;
+                    }
+                });
+            }
+        });
+        
+        // ==================== 便签功能 ====================
+        document.getElementById('addNoteBtn').addEventListener('click', function() {
+            const notesContainer = document.querySelector('.notes-container');
+            const noteCount = document.querySelectorAll('.note').length;
+            
+            if (noteCount >= 6) {
+                alert('最多只能创建6个便签哦！');
+                return;
+            }
+            
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+            
+            const textarea = document.createElement('textarea');
+            textarea.placeholder = '写下你的想法...';
+            
+            // 保存便签内容
+            textarea.addEventListener('input', function() {
+                saveNotes();
+            });
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '×';
+            deleteBtn.style.position = 'absolute';
+            deleteBtn.style.top = '5px';
+            deleteBtn.style.right = '5px';
+            deleteBtn.style.background = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+            deleteBtn.style.color = 'white';
+            deleteBtn.style.border = 'none';
+            deleteBtn.style.borderRadius = '50%';
+            deleteBtn.style.width = '20px';
+            deleteBtn.style.height = '20px';
+            deleteBtn.style.fontSize = '14px';
+            deleteBtn.style.cursor = 'pointer';
+            deleteBtn.style.display = 'none';
+            
+            note.addEventListener('mouseenter', function() {
+                deleteBtn.style.display = 'block';
+            });
+            
+            note.addEventListener('mouseleave', function() {
+                deleteBtn.style.display = 'none';
+            });
+            
+            deleteBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                note.remove();
+                saveNotes();
+            });
+            
+            note.appendChild(textarea);
+            note.appendChild(deleteBtn);
+            
+            // 在添加按钮前插入新便签
+            notesContainer.insertBefore(note, this);
+            
+            // 聚焦到新便签
+            textarea.focus();
+            
+            saveNotes();
+        });
+        
+        // 保存便签到本地存储
+        function saveNotes() {
+            const notes = [];
+            document.querySelectorAll('.note textarea').forEach((textarea, index) => {
+                if (textarea.parentElement.id !== 'addNoteBtn') {
+                    notes.push(textarea.value);
+                }
+            });
+            localStorage.setItem('cuteNotes', JSON.stringify(notes));
+        }
+        
+        // 加载便签
+        function loadNotes() {
+            const savedNotes = JSON.parse(localStorage.getItem('cuteNotes') || '[]');
+            const notesContainer = document.querySelector('.notes-container');
+            const addNoteBtn = document.getElementById('addNoteBtn');
+            
+            savedNotes.forEach(noteText => {
+                const note = document.createElement('div');
+                note.className = 'note';
+                note.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+                
+                const textarea = document.createElement('textarea');
+                textarea.value = noteText;
+                
+                textarea.addEventListener('input', function() {
+                    saveNotes();
+                });
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '×';
+                deleteBtn.style.position = 'absolute';
+                deleteBtn.style.top = '5px';
+                deleteBtn.style.right = '5px';
+                deleteBtn.style.background = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+                deleteBtn.style.color = 'white';
+                deleteBtn.style.border = 'none';
+                deleteBtn.style.borderRadius = '50%';
+                deleteBtn.style.width = '20px';
+                deleteBtn.style.height = '20px';
+                deleteBtn.style.fontSize = '14px';
+                deleteBtn.style.cursor = 'pointer';
+                deleteBtn.style.display = 'none';
+                
+                note.addEventListener('mouseenter', function() {
+                    deleteBtn.style.display = 'block';
+                });
+                
+                note.addEventListener('mouseleave', function() {
+                    deleteBtn.style.display = 'none';
+                });
+                
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    note.remove();
+                    saveNotes();
+                });
+                
+                note.appendChild(textarea);
+                note.appendChild(deleteBtn);
+                
+                notesContainer.insertBefore(note, addNoteBtn);
+            });
+        }
+        
+        // ==================== 记忆翻牌游戏 ====================
+        function initMemoryGame() {
+            const emojis = ['🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯'];
+            const gameGrid = document.getElementById('emojiGrid');
+            const gameStatus = document.getElementById('gameStatus');
+            
+            let flippedCards = [];
+            let matchedPairs = 0;
+            let gameStarted = false;
+            
+            // 洗牌算法
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            function createGameBoard() {
+                gameGrid.innerHTML = '';
+                const shuffledEmojis = shuffleArray([...emojis]);
+                
+                shuffledEmojis.forEach(emoji => {
+                    const card = document.createElement('div');
+                    card.className = 'emoji-card';
+                    card.dataset.emoji = emoji;
+                    card.innerHTML = '?';
+                    
+                    card.addEventListener('click', () => flipCard(card));
+                    gameGrid.appendChild(card);
+                });
+                
+                gameStatus.textContent = "点击卡片开始游戏！找到所有匹配的对子。";
+                flippedCards = [];
+                matchedPairs = 0;
+                gameStarted = true;
+            }
+            
+            function flipCard(card) {
+                if (!gameStarted) return;
+                
+                // 如果卡片已经翻转或匹配，则忽略点击
+                if (card.classList.contains('flipped') || flippedCards.length >= 2) {
+                    return;
+                }
+                
+                // 翻转卡片
+                card.classList.add('flipped');
+                card.innerHTML = card.dataset.emoji;
+                flippedCards.push(card);
+                
+                // 如果翻转了两张卡片，检查是否匹配
+                if (flippedCards.length === 2) {
+                    const [card1, card2] = flippedCards;
+                    
+                    if (card1.dataset.emoji === card2.dataset.emoji) {
+                        // 匹配成功
+                        matchedPairs++;
+                        flippedCards = [];
+                        
+                        // 检查游戏是否结束
+                        if (matchedPairs === emojis.length / 2) {
+                            setTimeout(() => {
+                                gameStatus.textContent = "恭喜！你找到了所有匹配的对子！🎉";
+                                gameStarted = false;
+                            }, 500);
+                        } else {
+                            gameStatus.textContent = `匹配成功！已找到 ${matchedPairs} 对。继续加油！`;
+                        }
+                    } else {
+                        // 不匹配，翻转回去
+                        gameStatus.textContent = "不匹配，再试试看！";
+                        setTimeout(() => {
+                            card1.classList.remove('flipped');
+                            card2.classList.remove('flipped');
+                            card1.innerHTML = '?';
+                            card2.innerHTML = '?';
+                            flippedCards = [];
+                        }, 1000);
+                    }
+                }
+            }
+            
+            // 初始化游戏板
+            createGameBoard();
+            
+            // 重新开始按钮
+            document.getElementById('restartGameBtn').addEventListener('click', createGameBoard);
+        }
+        
+        // ==================== 音乐播放器功能 ====================
+        // 初始化音频
+        window.songs = songs;
+        window.currentSongIndex = 0;
+        window.audio = new Audio(songs[window.currentSongIndex].src);
+        window.isPlaying = false;
+        window.noteInterval = null;
+        window.lyricsData = null;
+        window.lyricsInterval = null;
+        
+        // 创建浮动音符
+        function createFloatingNote() {
+            if (!window.isPlaying) return;
+            
+            const player = document.getElementById('player');
+            const note = document.createElement('div');
+            note.className = 'floating-note';
+            note.innerHTML = '♪';
+            note.style.left = Math.random() * 80 + 10 + '%';
+            note.style.top = '80%';
+            note.style.fontSize = Math.random() * 20 + 16 + 'px';
+            note.style.color = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+            
+            player.appendChild(note);
+            
+            // 开始动画
+            setTimeout(() => {
+                note.style.animation = `float-note ${Math.random() * 2 + 2}s ease-out forwards`;
+            }, 10);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                if (note.parentNode) {
+                    note.parentNode.removeChild(note);
+                }
+            }, 2500);
+        }
+        
+        // 更新波形动画
+        function updateWaveAnimation() {
+            const waveContainer = document.getElementById('waveContainer');
+            if (!waveContainer) return;
+            
+            const waveBars = waveContainer.querySelectorAll('.wave-bar');
+            
+            waveBars.forEach((bar, index) => {
+                // 随机生成高度
+                const randomHeight = Math.random() * 40 + 20;
+                bar.style.height = randomHeight + 'px';
+                
+                // 随机调整动画延迟
+                bar.style.animationDelay = (Math.random() * 0.5) + 's';
+            });
+        }
+        
+        // 切换音乐播放状态
+        function toggleMusic() {
+            if (!window.audio) return;
+            
+            if (window.isPlaying) {
+                window.audio.pause();
+                document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i>';
+                document.getElementById('playBtn').classList.remove('playing');
+                
+                // 停止创建音符
+                if (window.noteInterval) {
+                    clearInterval(window.noteInterval);
+                    window.noteInterval = null;
+                }
+                
+                // 停止歌词更新
+                if (window.lyricsInterval) {
+                    clearInterval(window.lyricsInterval);
+                    window.lyricsInterval = null;
+                }
+            } else {
+                window.audio.play().then(() => {
+                    document.getElementById('playBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                    document.getElementById('playBtn').classList.add('playing');
+                    
+                    // 开始创建音符
+                    window.noteInterval = setInterval(createFloatingNote, 800);
+                    
+                    // 开始波形动画
+                    setInterval(updateWaveAnimation, 500);
+                    
+                    // 开始歌词更新
+                    if (window.lyricsData && window.lyricsData.length > 0) {
+                        window.lyricsInterval = setInterval(updateLyrics, 100);
+                    }
+                }).catch(error => {
+                    console.error('播放失败:', error);
+                    alert('无法播放音频，请检查文件路径或网络连接');
+                });
+            }
+            
+            window.isPlaying = !window.isPlaying;
+        }
+        
+        // 绑定音乐控制按钮
+        document.getElementById('playBtn').addEventListener('click', toggleMusic);
+        
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (!window.songs || window.songs.length === 0) return;
+            
+            window.currentSongIndex = (window.currentSongIndex - 1 + window.songs.length) % window.songs.length;
+            changeSong();
+        });
+        
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (!window.songs || window.songs.length === 0) return;
+            
+            window.currentSongIndex = (window.currentSongIndex + 1) % window.songs.length;
+            changeSong();
+        });
+        
+        // 切换歌曲
+        function changeSong() {
+            // 暂停当前音乐
+            if (window.isPlaying && window.audio) {
+                window.audio.pause();
+                window.isPlaying = false;
+            }
+            
+            // 更新播放按钮状态
+            document.getElementById('playBtn').innerHTML = '<i class="fas fa-play"></i>';
+            document.getElementById('playBtn').classList.remove('playing');
+            
+            // 停止所有动画
+            if (window.noteInterval) {
+                clearInterval(window.noteInterval);
+                window.noteInterval = null;
+            }
+            
+            if (window.lyricsInterval) {
+                clearInterval(window.lyricsInterval);
+                window.lyricsInterval = null;
+            }
+            
+            // 创建新的音频对象
+            const song = window.songs[window.currentSongIndex];
+            window.audio = new Audio(song.src);
+            
+            // 设置音频播放结束事件
+            window.audio.onended = function() {
+                // 自动播放下一首
+                window.currentSongIndex = (window.currentSongIndex + 1) % window.songs.length;
+                changeSong();
+                
+                // 如果之前是播放状态，则播放新歌曲
+                if (window.wasPlaying) {
+                    setTimeout(() => {
+                        toggleMusic();
+                    }, 500);
+                }
+            };
+            
+            // 更新歌曲信息显示
+            updateSongInfo();
+        }
+        
+        // ==================== 每日一句功能 ====================
+        const quotes = [
+            "你是世界上最可爱的人，我每天都感谢命运让我遇见你。",
+            "你的微笑是我一天中最期待看到的画面。",
+            "和你在一起的每一刻，都是我生命中最美好的时光。",
+            "你的存在让我的世界变得完整而美好。",
+            "无论发生什么，我都会一直爱你、支持你。",
+            "你的善良和温柔让我每天都感到幸福。",
+            "感谢你出现在我的生命里，让我的世界充满阳光。",
+            "你是我心中最特别的人，无人可以替代。",
+            "和你在一起的每一天都像是情人节。",
+            "你的快乐就是我最大的幸福。"
+        ];
+        
+        document.getElementById('quoteBtn').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerHTML = `<p>"${quotes[randomIndex]}"</p>`;
+        });
+        
+        // ==================== 涂鸦板功能 ====================
+        function initDrawingCanvas() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const clearBtn = document.getElementById('clearCanvasBtn');
+            
+            // 设置初始画笔属性
+            ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            
+            let drawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            // 调整画布大小
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const maxWidth = Math.min(container.clientWidth - 40, 500);
+                
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * 0.66;
+            }
+            
+            // 开始绘画
+            function startDrawing(e) {
+                drawing = true;
+                [lastX, lastY] = getMousePos(canvas, e);
+            }
+            
+            // 绘画过程
+            function draw(e) {
+                if (!drawing) return;
+                
+                e.preventDefault();
+                
+                const [x, y] = getMousePos(canvas, e);
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                
+                [lastX, lastY] = [x, y];
+            }
+            
+            // 停止绘画
+            function stopDrawing() {
+                drawing = false;
+            }
+            
+            // 获取鼠标位置
+            function getMousePos(canvas, evt) {
+                const rect = canvas.getBoundingClientRect();
+                let clientX, clientY;
+                
+                if (evt.type.includes('touch')) {
+                    clientX = evt.touches[0].clientX;
+                    clientY = evt.touches[0].clientY;
+                } else {
+                    clientX = evt.clientX;
+                    clientY = evt.clientY;
+                }
+                
+                return [
+                    clientX - rect.left,
+                    clientY - rect.top
+                ];
+            }
+            
+            // 清除画布
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // 事件监听器
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // 触摸事件支持
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startDrawing(e);
+            });
+            
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                draw(e);
+            });
+            
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            clearBtn.addEventListener('click', clearCanvas);
+            
+            // 初始调整画布大小
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+        }
+        
+        // ==================== 猜牌游戏功能 ====================
+        let guessCardGame = {
+            difficulty: 'easy',
+            targetCard: null,
+            attempts: 3,
+            usedAttempts: 0,
+            gameActive: false,
+            animationInProgress: false,
+            
+            // 扑克牌值顺序（从小到大）
+            cardOrder: ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'],
+            cardOrderWithJokers: ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', '小王', '大王'],
+            
+            // 初始化游戏
+            init: function() {
+                // 难度选择按钮事件
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.difficulty = btn.dataset.difficulty;
+                        this.updateGameStatus(`已选择${btn.textContent}，点击"开始新游戏"按钮开始！`);
+                        this.resetGame();
+                        this.createCardButtons();
+                    });
+                });
+                
+                // 开始新游戏按钮
+                document.getElementById('startGuessGameBtn').addEventListener('click', () => this.startNewGame());
+                
+                // 创建扑克牌按钮
+                this.createCardButtons();
+                
+                // 初始状态
+                this.updateGameStatus("请选择难度，然后开始游戏！");
+                this.updateAttemptsDisplay();
+            },
+            
+            // 创建扑克牌按钮
+            createCardButtons: function() {
+                const cardsGrid = document.getElementById('cardsGrid');
+                cardsGrid.innerHTML = '';
+                
+                const cards = this.difficulty === 'easy' ? this.cardOrder : this.cardOrderWithJokers;
+                const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+                const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+                
+                cards.forEach(card => {
+                    const cardBtn = document.createElement('button');
+                    cardBtn.className = 'card-btn disabled';
+                    cardBtn.textContent = card;
+                    cardBtn.dataset.card = card;
+                    cardBtn.disabled = true;
+                    
+                    // 根据卡片值设置不同颜色
+                    if (card === '大王' || card === '小王') {
+                        cardBtn.style.color = accentColor;
+                    } else if (card === 'J' || card === 'Q' || card === 'K') {
+                        cardBtn.style.color = secondaryColor;
+                    } else if (card === 'A') {
+                        cardBtn.style.color = '#4CAF50';
+                    }
+                    
+                    cardBtn.addEventListener('click', () => this.guessCard(card));
+                    cardsGrid.appendChild(cardBtn);
+                });
+            },
+            
+            // 开始新游戏
+            startNewGame: function() {
+                if (this.animationInProgress) return;
+                
+                this.resetGame();
+                
+                // 开始随机选牌动画
+                this.startRandomCardAnimation();
+            },
+            
+            // 随机选牌动画
+            startRandomCardAnimation: function() {
+                this.animationInProgress = true;
+                const cardSlot = document.getElementById('cardSlot');
+                const cards = this.difficulty === 'easy' ? this.cardOrder : this.cardOrderWithJokers;
+                
+                // 随机选择一张目标牌
+                this.targetCard = cards[Math.floor(Math.random() * cards.length)];
+                
+                // 开始洗牌动画
+                cardSlot.textContent = '?';
+                cardSlot.classList.add('card-shuffling');
+                this.updateGameStatus(`正在随机选择一张牌...`);
+                
+                // 模拟洗牌效果
+                let shuffleCount = 0;
+                const maxShuffles = 12;
+                const shuffleInterval = setInterval(() => {
+                    if (shuffleCount < maxShuffles) {
+                        // 显示随机牌（确保不显示目标牌）
+                        let randomCard;
+                        do {
+                            randomCard = cards[Math.floor(Math.random() * cards.length)];
+                        } while (randomCard === this.targetCard && cards.length > 1);
+                        
+                        cardSlot.textContent = randomCard;
+                        shuffleCount++;
+                    } else {
+                        // 停止洗牌动画
+                        clearInterval(shuffleInterval);
+                        cardSlot.classList.remove('card-shuffling');
+                        cardSlot.textContent = '?';
+                        
+                        // 开始游戏
+                        this.gameActive = true;
+                        this.animationInProgress = false;
+                        this.updateGameStatus(`游戏开始！我已随机选择了一张牌。你有${this.attempts}次机会猜中它！`);
+                        this.setCardButtonsEnabled(true);
+                    }
+                }, 150);
+            },
+            
+            // 重置游戏
+            resetGame: function() {
+                this.targetCard = null;
+                this.usedAttempts = 0;
+                this.gameActive = false;
+                
+                // 重置卡片按钮状态
+                const cardButtons = document.querySelectorAll('.card-btn');
+                cardButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    btn.classList.add('disabled');
+                    btn.disabled = true;
+                });
+                
+                // 隐藏游戏结果
+                const gameResult = document.getElementById('gameResult');
+                gameResult.classList.add('hidden');
+                gameResult.innerHTML = '';
+                
+                // 重置卡槽显示
+                const cardSlot = document.getElementById('cardSlot');
+                cardSlot.textContent = '?';
+                cardSlot.classList.remove('card-shuffling', 'card-revealed');
+                
+                // 更新尝试次数显示
+                this.updateAttemptsDisplay();
+            },
+            
+            // 设置卡片按钮是否可用
+            setCardButtonsEnabled: function(enabled) {
+                const cardButtons = document.querySelectorAll('.card-btn');
+                cardButtons.forEach(btn => {
+                    if (enabled) {
+                        btn.classList.remove('disabled');
+                        btn.disabled = false;
+                    } else {
+                        btn.classList.add('disabled');
+                        btn.disabled = true;
+                    }
+                });
+            },
+            
+            // 猜牌
+            guessCard: function(guessedCard) {
+                if (!this.gameActive || this.usedAttempts >= this.attempts) return;
+                
+                // 标记已选择的卡片
+                const cardButtons = document.querySelectorAll('.card-btn');
+                cardButtons.forEach(btn => {
+                    btn.classList.remove('selected');
+                    if (btn.dataset.card === guessedCard) {
+                        btn.classList.add('selected');
+                    }
+                });
+                
+                this.usedAttempts++;
+                this.updateAttemptsDisplay();
+                
+                // 检查是否猜中
+                if (guessedCard === this.targetCard) {
+                    this.gameWin();
+                    return;
+                }
+                
+                // 如果没有猜中且还有机会
+                if (this.usedAttempts < this.attempts) {
+                    const hint = this.getHint(guessedCard);
+                    this.updateGameStatus(`第${this.usedAttempts}次尝试：你猜的是${guessedCard}，${hint} 再试试！`);
+                } else {
+                    this.gameLose();
+                }
+            },
+            
+            // 获取提示
+            getHint: function(guessedCard) {
+                const cards = this.difficulty === 'easy' ? this.cardOrder : this.cardOrderWithJokers;
+                const guessedIndex = cards.indexOf(guessedCard);
+                const targetIndex = cards.indexOf(this.targetCard);
+                
+                if (guessedIndex === -1 || targetIndex === -1) return "无法判断";
+                
+                const diff = targetIndex - guessedIndex;
+                
+                if (this.difficulty === 'easy') {
+                    if (diff > 0) {
+                        return diff <= 2 ? `比${guessedCard}大一点点` : `比${guessedCard}大的多`;
+                    } else {
+                        return Math.abs(diff) <= 2 ? `比${guessedCard}小一点点` : `比${guessedCard}小的多`;
+                    }
+                } else {
+                    if (diff > 0) {
+                        return diff <= 2 ? `比${guessedCard}大的多` : `比${guessedCard}大一点点`;
+                    } else {
+                        return Math.abs(diff) <= 2 ? `比${guessedCard}小的多` : `比${guessedCard}小一点点`;
+                    }
+                }
+            },
+            
+            // 游戏胜利
+            gameWin: function() {
+                this.gameActive = false;
+                this.setCardButtonsEnabled(false);
+                
+                const cardSlot = document.getElementById('cardSlot');
+                cardSlot.textContent = this.targetCard;
+                cardSlot.classList.add('card-revealed');
+                
+                const resultDiv = document.getElementById('gameResult');
+                resultDiv.innerHTML = `
+                    <div class="game-result win">
+                        恭喜！你猜对了！🎉<br>
+                        目标牌是：${this.targetCard}<br>
+                        你用了${this.usedAttempts}次机会！
+                    </div>
+                `;
+                resultDiv.classList.remove('hidden');
+                
+                this.updateGameStatus(`太棒了！你猜对了！目标牌是${this.targetCard}`);
+            },
+            
+            // 游戏失败
+            gameLose: function() {
+                this.gameActive = false;
+                this.setCardButtonsEnabled(false);
+                
+                const cardSlot = document.getElementById('cardSlot');
+                cardSlot.textContent = this.targetCard;
+                cardSlot.classList.add('card-revealed');
+                
+                const resultDiv = document.getElementById('gameResult');
+                resultDiv.innerHTML = `
+                    <div class="game-result lose">
+                        很遗憾，机会用完了！😢<br>
+                        目标牌是：${this.targetCard}<br>
+                        点击"开始新游戏"再来一局！
+                    </div>
+                `;
+                resultDiv.classList.remove('hidden');
+                
+                this.updateGameStatus(`机会用完了！目标牌是${this.targetCard}`);
+            },
+            
+            // 更新游戏状态文本
+            updateGameStatus: function(text) {
+                document.getElementById('gameStatusText').innerHTML = text;
+            },
+            
+            // 更新尝试次数显示
+            updateAttemptsDisplay: function() {
+                const attemptDots = document.querySelectorAll('.attempt-dot');
+                attemptDots.forEach((dot, index) => {
+                    if (index < this.usedAttempts) {
+                        dot.classList.add('used');
+                    } else {
+                        dot.classList.remove('used');
+                    }
+                });
+            }
+        };
+        
+        // 初始化猜牌游戏
+        function initGuessCardGame() {
+            guessCardGame.init();
+        }
+        
+        // ==================== 页面初始化 ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            loadNotes();
+            initThemeSystem();
+            
+            // 初始化歌曲信息显示
+            updateSongInfo();
+            
+            // 随机显示一个每日一句
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').innerHTML = `<p>"${quotes[randomIndex]}"</p>`;
+            
+            // 初始化音乐模块
+            window.wasPlaying = false;
+            window.musicInitialized = false;
+            window.gameInitialized = false;
+            window.guessCardInitialized = false;
+            window.canvasInitialized = false;
+        });
+    </script>
+</body>
+</html>
